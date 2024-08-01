@@ -48,7 +48,9 @@ var (
 					log.Fatal(err)
 				}
 
-				feed.Update(downloadFolder, nrOfPodcastsToDownload)
+				if err := feed.Update(downloadFolder, nrOfPodcastsToDownload); err != nil {
+					log.Fatal(err)
+				}
 			}
 		},
 	}
