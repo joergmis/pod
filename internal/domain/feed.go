@@ -24,11 +24,16 @@ type Feed struct {
 	} `xml:"channel"`
 }
 
-func (f *Feed) Update(folder string) error {
+func (f *Feed) Update(folder string, nrOfDownloads int) error {
 	items := len(f.Channel.Items)
 
 	fmt.Printf("%s: %d episodes\n", f.Channel.Title, len(f.Channel.Items))
+
 	for idx, item := range f.Channel.Items {
+		if idx >= nrOfDownloads {
+			return nil
+		}
+
 		filename := fmt.Sprintf("%s_ep_%04d_%s.mp3", simplifyName(f.Channel.Title), items-idx, simplifyName(item.Title))
 		path := filepath.Join(folder, filename)
 
